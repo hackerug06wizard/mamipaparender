@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: mami-papa-babies
+    env: node
+    region: ohio
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    
+    # Auto-deploy on push to main
+    autoDeploy: true
+    
+    # Environment variables required for deployment
+    envVars:
+      - key: NODE_ENV
+        value: production
+      
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+        
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+        
+      - key: WEAREMARZ_API_KEY
+        sync: false
+        
+      - key: WEAREMARZ_API_SECRET
+        sync: false
+    
+    # Health check configuration
+    healthCheckPath: /
+    
+    # Disk storage for uploaded images
+    disk:
+      name: product-images
+      mountPath: /var/data/products
+      sizeGB: 1
